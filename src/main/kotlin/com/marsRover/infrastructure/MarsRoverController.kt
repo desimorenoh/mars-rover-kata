@@ -3,7 +3,9 @@ package com.marsRover.infrastructure
 import com.marsRover.application.MoveRoverUseCase
 import com.marsRover.application.RoverMapUseCase
 import com.marsRover.application.StartRoverUseCase
+import com.marsRover.domain.Id
 import java.util.Scanner
+import java.util.UUID
 
 class MarsRoverController(
     private val roverMapUseCase: RoverMapUseCase,
@@ -23,17 +25,21 @@ class MarsRoverController(
         println("Insert initial rover direction (n = north, e = east, w = west, s = south):")
         val roverInitialDirection = reader.next()
 
-        // Save original map
-        roverMapUseCase.saveMap(mapHorizontalSize, mapVerticalSize)
-        // Start rover from initial position
-        startRoverUseCase.startRover(roverInitialHorizontalPosition, roverInitialVerticalPosition, roverInitialDirection)
+        val savedMap = roverMapUseCase.saveMap(UUID.randomUUID().toString(), mapHorizontalSize, mapVerticalSize)
+
+        val startRover = startRoverUseCase.startRover(
+            Id(UUID.randomUUID().toString()),
+            roverInitialHorizontalPosition,
+            roverInitialVerticalPosition,
+            roverInitialDirection
+        )
 
         do {
             println("Insert command (f = forward, b = backward, l = turn left, r = turn right):")
             val command = reader.next()
-            // Move rover to a new position
-            val rover = moveRoverUseCase.move(command)
-            // print the new position
+
+            val rover = moveRoverUseCase.move(startRover.id, savedMap.id, command)
+
             println(
                 String.format(
                     "Rover is at x:%d y:%d facing:%s",

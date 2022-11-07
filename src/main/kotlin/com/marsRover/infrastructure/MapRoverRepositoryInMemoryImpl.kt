@@ -1,16 +1,17 @@
 package com.marsRover.infrastructure
 
+import com.marsRover.domain.Id
 import com.marsRover.domain.RoverMap
 import com.marsRover.domain.RoverMapRepository
 
 class MapRoverRepositoryInMemoryImpl : RoverMapRepository {
-    private var roverMap: RoverMap? = null
+    private val roverMap = mutableMapOf<String, RoverMap>()
 
     override fun save(newRoverMap: RoverMap) {
-        roverMap = newRoverMap
+        roverMap.put(newRoverMap.id.value, newRoverMap)
     }
 
-    override fun load(): RoverMap {
-        return roverMap!!
+    override fun load(id: Id): RoverMap? {
+        return roverMap.get(id.value)
     }
 }

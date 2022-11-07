@@ -1,6 +1,7 @@
 package com.marsRoverShould.unitTest
 
 import com.marsRover.application.RoverMapUseCase
+import com.marsRover.domain.Id
 import com.marsRover.domain.RoverMap
 import com.marsRover.domain.RoverMapRepository
 import org.junit.Test
@@ -21,8 +22,8 @@ class RoverMapUseCaseShould {
 
     @Test
     fun `save map`() {
-        roverMapUsecase.saveMap(5,5)
+        roverMapUsecase.saveMap("uuid",5,5)
 
-        Mockito.verify(roverMapRepository).save(RoverMap(5, 5))
+        Mockito.verify(roverMapRepository).save(RoverMap(Id("uuid"), 5, 5))
     }
 }

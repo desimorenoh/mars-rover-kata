@@ -5,18 +5,17 @@ import com.marsRover.domain.OrientationValue.SOUTH
 import com.marsRover.domain.OrientationValue.EAST
 import com.marsRover.domain.OrientationValue.WEST
 
-data class Rover(val coordinate: Coordinate, val orientation: Orientation) {
+data class Rover(val id: Id, val coordinate: Coordinate, val orientation: Orientation) {
     fun moveForward(mapRover: RoverMap): Rover {
         val movement = nextForwardMovement(coordinate)
         val coordinate = checkForwardMovement(movement, mapRover, coordinate)
-        return Rover(coordinate, orientation)
+        return this.copy(coordinate = coordinate)
     }
 
     fun moveBackward(mapRover: RoverMap): Rover {
         val movement = nextBackwardMovement()
         val coordinate = checkBackwardMovement(movement, mapRover)
-
-        return Rover(coordinate, orientation)
+        return this.copy(coordinate = coordinate)
     }
 
     fun moveRight(): Rover {
@@ -27,7 +26,7 @@ data class Rover(val coordinate: Coordinate, val orientation: Orientation) {
                 EAST -> Orientation(SOUTH)
                 WEST -> Orientation(NORTH)
             }
-        return Rover(coordinate, orientation)
+        return this.copy(orientation = orientation)
     }
 
     fun moveLeft(): Rover {
@@ -38,7 +37,7 @@ data class Rover(val coordinate: Coordinate, val orientation: Orientation) {
                 EAST -> Orientation(NORTH)
                 WEST -> Orientation(SOUTH)
             }
-        return Rover(coordinate, orientation)
+        return this.copy(orientation = orientation)
     }
 
     private fun nextForwardMovement(coordinate: Coordinate) = when (orientation.value) {
