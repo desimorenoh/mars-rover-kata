@@ -8,13 +8,13 @@ import com.marsRover.domain.OrientationValue.WEST
 data class Rover(val id: Id, val coordinate: Coordinate, val orientation: Orientation) {
     fun moveForward(mapRover: RoverMap): Rover {
         val movement = nextForwardMovement(coordinate)
-        val coordinate = checkForwardMovement(movement, mapRover, coordinate)
+        val coordinate = mapRover.checkForwardMovement(movement, mapRover, coordinate)
         return this.copy(coordinate = coordinate)
     }
 
     fun moveBackward(mapRover: RoverMap): Rover {
         val movement = nextBackwardMovement()
-        val coordinate = checkBackwardMovement(movement, mapRover)
+        val coordinate = mapRover.checkBackwardMovement(movement, mapRover)
         return this.copy(coordinate = coordinate)
     }
 
@@ -29,22 +29,6 @@ data class Rover(val id: Id, val coordinate: Coordinate, val orientation: Orient
         WEST -> Coordinate(coordinate.x - 1, coordinate.y)
     }
 
-    private fun checkForwardMovement(
-        movement: Coordinate,
-        mapRover: RoverMap,
-        coordinate: Coordinate
-    ): Coordinate {
-        return if (movement.y == mapRover.verticalSize + 1) {
-            Coordinate(coordinate.x, (-mapRover.verticalSize))
-        } else if (movement.y == -mapRover.verticalSize - 1) {
-            Coordinate(coordinate.x, mapRover.verticalSize)
-        } else if (movement.x == mapRover.horizontalSize + 1) {
-            Coordinate((-mapRover.horizontalSize), coordinate.y)
-        } else if (movement.x == -mapRover.horizontalSize - 1) {
-            Coordinate(mapRover.horizontalSize, coordinate.y)
-        } else movement
-    }
-
     private fun nextBackwardMovement(): Coordinate {
         val coordinate =
             when (orientation.value) {
@@ -54,17 +38,5 @@ data class Rover(val id: Id, val coordinate: Coordinate, val orientation: Orient
                 WEST -> Coordinate(coordinate.x + 1, coordinate.y)
             }
         return coordinate
-    }
-
-    private fun checkBackwardMovement(movement: Coordinate, mapRover: RoverMap): Coordinate {
-        return if (movement.y == -mapRover.verticalSize - 1) {
-            Coordinate(movement.x, mapRover.verticalSize)
-        } else if (movement.y == mapRover.verticalSize + 1) {
-            Coordinate(movement.x, (-mapRover.verticalSize))
-        } else if (movement.x == -mapRover.horizontalSize - 1) {
-            Coordinate(mapRover.horizontalSize, movement.y)
-        } else if (movement.x == mapRover.horizontalSize + 1) {
-            Coordinate((-mapRover.horizontalSize), movement.y)
-        } else movement
     }
 }

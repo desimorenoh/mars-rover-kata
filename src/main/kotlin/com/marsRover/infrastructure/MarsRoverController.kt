@@ -7,6 +7,7 @@ import com.marsRover.domain.Id
 import java.util.Scanner
 import java.util.UUID
 
+
 class MarsRoverController(
     private val roverMapUseCase: RoverMapUseCase,
     private val moveRoverUseCase: MoveRoverUseCase,

@@ -20,8 +20,8 @@ class MoveRoverUseCase(
             when (command) {
                 "f" -> rover.moveForward(mapRover)
                 "b" -> rover.moveBackward(mapRover)
-                "l" -> rover.rotateRight()
-                "r" -> rover.rotateLeft()
+                "l" -> rover.rotateLeft()
+                "r" -> rover.rotateRight()
                 else -> throw ForbiddenMove("move not allowed")
             }
         roverRepository.save(roverMoved)
