@@ -22,7 +22,7 @@ class RoverMapUseCaseShould {
 
     @Test
     fun `save map`() {
-        roverMapUsecase.saveMap("uuid",5,5)
+        roverMapUsecase.saveMap(Id("uuid"),5,5)
 
         Mockito.verify(roverMapRepository).save(RoverMap(Id("uuid"), 5, 5))
     }

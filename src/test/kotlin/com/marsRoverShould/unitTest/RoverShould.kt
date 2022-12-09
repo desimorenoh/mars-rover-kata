@@ -43,16 +43,17 @@ class RoverShould {
         val givenRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(NORTH))
         val expectedRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(EAST))
 
-        val result = givenRover.moveRight()
+        val result = givenRover.rotateRight()
 
         assertEquals(expectedRover, result)
     }
 
     @Test
     fun `should face south when turn right from east position`() {
-        val expected = Rover(Id("uuid"), Coordinate(0, 0), Orientation(SOUTH))
+        val givenRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(SOUTH))
+        val expected = Rover(Id("uuid"), Coordinate(0, 0), Orientation(WEST))
 
-        val result = Rover(Id("uuid"), Coordinate(0, 0), Orientation(EAST)).moveRight()
+        val result = givenRover.rotateRight()
 
         assertEquals(expected, result)
     }
@@ -62,7 +63,7 @@ class RoverShould {
         val givenRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(EAST))
         val expectedRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(SOUTH))
 
-        val result = givenRover.moveRight()
+        val result = givenRover.rotateRight()
 
         assertEquals(expectedRover, result)
     }
@@ -72,7 +73,7 @@ class RoverShould {
         val givenRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(WEST))
         val expectedRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(NORTH))
 
-        val result = givenRover.moveRight()
+        val result = givenRover.rotateRight()
 
         assertEquals(expectedRover, result)
     }
@@ -83,7 +84,7 @@ class RoverShould {
         val givenRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(NORTH))
         val expectedRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(WEST))
 
-        val result = givenRover.moveLeft()
+        val result = givenRover.rotateLeft()
 
         assertEquals(expectedRover, result)
     }
@@ -93,7 +94,7 @@ class RoverShould {
         val givenRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(EAST))
         val expectedRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(NORTH))
 
-        val result = givenRover.moveLeft()
+        val result = givenRover.rotateLeft()
 
         assertEquals(expectedRover, result)
     }
@@ -103,7 +104,7 @@ class RoverShould {
         val givenRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(SOUTH))
         val expectedRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(EAST))
 
-        val result = givenRover.moveLeft()
+        val result = givenRover.rotateLeft()
 
         assertEquals(expectedRover, result)
     }
@@ -113,7 +114,7 @@ class RoverShould {
         val givenRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(WEST))
         val expectedRover = Rover(Id("uuid"), Coordinate(0, 0), Orientation(SOUTH))
 
-        val result = givenRover.moveLeft()
+        val result = givenRover.rotateLeft()
 
         assertEquals(expectedRover, result)
     }

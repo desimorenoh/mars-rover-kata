@@ -25,13 +25,15 @@ class MarsRoverController(
         println("Insert initial rover direction (n = north, e = east, w = west, s = south):")
         val roverInitialDirection = reader.next()
 
-        val savedMap = roverMapUseCase.saveMap(UUID.randomUUID().toString(), mapHorizontalSize, mapVerticalSize)
+        val savedMap = roverMapUseCase.saveMap(Id(UUID.randomUUID().toString()), mapHorizontalSize, mapVerticalSize)
 
         val startRover = startRoverUseCase.startRover(
             Id(UUID.randomUUID().toString()),
             roverInitialHorizontalPosition,
             roverInitialVerticalPosition,
-            roverInitialDirection
+            roverInitialDirection,
+            mapHorizontalSize,
+            mapVerticalSize
         )
 
         do {

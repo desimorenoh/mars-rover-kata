@@ -18,27 +18,9 @@ data class Rover(val id: Id, val coordinate: Coordinate, val orientation: Orient
         return this.copy(coordinate = coordinate)
     }
 
-    fun moveRight(): Rover {
-        val orientation =
-            when (orientation.value) {
-                NORTH -> Orientation(EAST)
-                SOUTH -> Orientation(WEST)
-                EAST -> Orientation(SOUTH)
-                WEST -> Orientation(NORTH)
-            }
-        return this.copy(orientation = orientation)
-    }
+    fun rotateRight() = this.copy(orientation = orientation.rotateRight())
 
-    fun moveLeft(): Rover {
-        val orientation =
-            when (orientation.value) {
-                NORTH -> Orientation(WEST)
-                SOUTH -> Orientation(EAST)
-                EAST -> Orientation(NORTH)
-                WEST -> Orientation(SOUTH)
-            }
-        return this.copy(orientation = orientation)
-    }
+    fun rotateLeft() = this.copy(orientation = orientation.rotateLeft())
 
     private fun nextForwardMovement(coordinate: Coordinate) = when (orientation.value) {
         NORTH -> Coordinate(coordinate.x, coordinate.y + 1)

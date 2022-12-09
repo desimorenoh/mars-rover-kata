@@ -1,12 +1,6 @@
 package com.marsRover.application
 
-import com.marsRover.domain.Coordinate
-import com.marsRover.domain.ForbiddenDirection
-import com.marsRover.domain.Id
-import com.marsRover.domain.Orientation
-import com.marsRover.domain.OrientationValue
-import com.marsRover.domain.Rover
-import com.marsRover.domain.RoverRepository
+import com.marsRover.domain.*
 
 class StartRoverUseCase(
     private val roverRepository: RoverRepository,
@@ -16,6 +10,8 @@ class StartRoverUseCase(
         roverInitialHorizontalPosition: Int,
         roverInitialVerticalPosition: Int,
         roverInitialDirection: String,
+        horizontalSize: Int,
+        verticalSize: Int
     ): Rover {
         val directionOrigin = when (roverInitialDirection) {
             "n" -> Orientation(OrientationValue.NORTH)
@@ -26,7 +22,18 @@ class StartRoverUseCase(
         }
         val coordinateOrigin = Coordinate(roverInitialHorizontalPosition, roverInitialVerticalPosition)
         val initialRover = Rover(id, coordinateOrigin, directionOrigin)
-        roverRepository.save(initialRover)
-        return initialRover
+        val mapSize = Coordinate(horizontalSize, verticalSize)
+        when {
+            initialRover.coordinate.x > mapSize.x || initialRover.coordinate.y > mapSize.y -> {
+                throw ForbiddenPosition("position not allowed")
+            }
+            initialRover.coordinate.x < -mapSize.x || initialRover.coordinate.y < -mapSize.y -> {
+                throw ForbiddenPosition("position not allowed")
+            }
+            else -> {
+                roverRepository.save(initialRover)
+                return initialRover
+            }
+        }
     }
 }
