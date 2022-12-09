@@ -17,15 +17,19 @@ data class RoverMap(val id: Id, val horizontalSize: Int, val verticalSize: Int) 
         } else movement
     }
 
-    fun checkBackwardMovement(movement: Coordinate, mapRover: RoverMap): Coordinate {
+    fun checkBackwardMovement(
+        movement: Coordinate,
+        mapRover: RoverMap,
+        coordinate: Coordinate
+    ): Coordinate {
         return if (movement.y == -mapRover.verticalSize - 1) {
-            Coordinate(movement.x, mapRover.verticalSize)
+            Coordinate(coordinate.x, mapRover.verticalSize)
         } else if (movement.y == mapRover.verticalSize + 1) {
-            Coordinate(movement.x, (-mapRover.verticalSize))
+            Coordinate(coordinate.x, (-mapRover.verticalSize))
         } else if (movement.x == -mapRover.horizontalSize - 1) {
-            Coordinate(mapRover.horizontalSize, movement.y)
+            Coordinate(mapRover.horizontalSize, coordinate.y)
         } else if (movement.x == mapRover.horizontalSize + 1) {
-            Coordinate((-mapRover.horizontalSize), movement.y)
+            Coordinate((-mapRover.horizontalSize), coordinate.y)
         } else movement
     }
 }
